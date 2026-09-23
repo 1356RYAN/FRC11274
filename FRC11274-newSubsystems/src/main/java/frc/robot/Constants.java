@@ -138,15 +138,18 @@ public final class Constants {
       public static final double kV = 0;
       public static final double kG = 0.5;
 
-      public static final double kP_Down = 14;
+      public static final double kP_Down = 5;
       public static final double SUPPLY_CURRENT_LIMIT = 60;
       public static final double STATOR_CURRENT_LIMIT = 60;
-
+      
+      
       public static final double MAX_ROTATIONS = -0.02;
       public static final double MIN_ROTATIONS = -0.6;
 
-      public static final double GEAR_RATIO = 10;
+      //chain 24/15 * 9 ratio
+      public static final double GEAR_RATIO = 14.4;
 
+      
       public static final double DEPLOY_ROTATIONS = -0.418;
       public static final double RETRACT_ROTATIONS = -0.07;
 
