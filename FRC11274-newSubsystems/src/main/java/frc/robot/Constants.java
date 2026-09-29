@@ -136,9 +136,10 @@ public final class Constants {
 
       public static final double kP_Up = 14;
       public static final double kV = 0;
-      public static final double kG = 0.5;
+      public static final double kG = 0.2;
+      
 
-      public static final double kP_Down = 5;
+      public static final double kP_Down = 5;  
       public static final double SUPPLY_CURRENT_LIMIT = 60;
       public static final double STATOR_CURRENT_LIMIT = 60;
       
@@ -160,7 +161,7 @@ public final class Constants {
     }
 
     public static final class RollerConstants{
-      public static final int ROLLER_ID = 19;
+      public static final int ROLLER_ID = 20;
       public static final double kP = 0.1; //0.1
       public static final double kV = 0.096; //0.09
       public static final double kS = 0.6; //2.2

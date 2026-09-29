@@ -4,9 +4,7 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix6.configs.SoftwareLimitSwitchConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
-import com.ctre.phoenix6.configs.TalonFXConfigurator;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.controls.VelocityVoltage;
@@ -18,10 +16,7 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.IntakeConstants;
-import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 public class IntakeSubsystem extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
@@ -34,13 +29,18 @@ public class IntakeSubsystem extends SubsystemBase {
     TalonFXConfiguration pivotConfigs = new TalonFXConfiguration();
     
     pivotConfigs.Slot0.kP = IntakeConstants.PivotConstants.kP_Down;
-    //pivotConfigs.Slot0.kG = IntakeConstants.PivotConstants.kG;
+    pivotConfigs.Slot0.kG = IntakeConstants.PivotConstants.kG;
+    pivotConfigs.Slot1.kG = IntakeConstants.PivotConstants.kG;
     //pivotConfigs.Slot0.kV = IntakeConstants.PivotConstants.kV;
     pivotConfigs.Slot1.kP = IntakeConstants.PivotConstants.kP_Up;
+    
+
+
 
     pivotConfigs.Feedback.SensorToMechanismRatio= IntakeConstants.PivotConstants.GEAR_RATIO; 
     pivotConfigs.MotorOutput.NeutralMode = NeutralModeValue.Brake;
-    //pivotConfigs.Slot0.GravityType = GravityTypeValue.Arm_Cosine;
+    pivotConfigs.Slot0.GravityType = GravityTypeValue.Arm_Cosine;
+    pivotConfigs.Slot1.GravityType = GravityTypeValue.Arm_Cosine;
     pivotConfigs.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
 
     pivotConfigs.CurrentLimits.SupplyCurrentLimit = IntakeConstants.PivotConstants.SUPPLY_CURRENT_LIMIT;
@@ -104,7 +104,7 @@ public class IntakeSubsystem extends SubsystemBase {
       double error = targetRotation - getPivotPosition();
       int slot;
       if (Math.abs(error) < 0.01) {
-        slot = 0; 
+        slot = 1; 
       } else {
         slot = (error > 0) ? 1 : 0;
       }
