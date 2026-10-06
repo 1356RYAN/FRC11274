@@ -145,6 +145,22 @@ private final PIDController pidController = new PIDController(0.07, 0, 0);
     return Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2));
   }
 
+  //TREE MAP SHOOTER TELEMETRY
+    public double getHeadingErrorDegrees() {
+    double error = targetRotationToHub().getDegrees() - getPose().getRotation().getDegrees();
+    return Math.IEEEremainder(error, 360.0);
+  }
+
+  public boolean isAimed() {
+    return Math.abs(getHeadingErrorDegrees()) < 3.0;
+  }
+
+  public boolean inShootingRange() {
+    double d = getDistance();
+    double[][] pts = TelemetryConstants.dataPoints;
+    return d >= pts[0][0] && d <= pts[pts.length - 1][0];
+  }
+
   public DriverStation.Alliance getAlliance() {
     var alliance = DriverStation.getAlliance();
     if (alliance.isPresent()) {
@@ -157,6 +173,7 @@ private final PIDController pidController = new PIDController(0.07, 0, 0);
   public void periodic() {
     field.setRobotPose(getPose());
 
+    
     m_poseEstimator.update(
       Rotation2d.fromDegrees(m_pigeon.getYaw()),
       m_swerveDriveSubsystem.getModulePositions()
@@ -188,6 +205,10 @@ private final PIDController pidController = new PIDController(0.07, 0, 0);
 
     SmartDashboard.putNumber("Estimated X in", poseEstimate.getX()*39.37);
     SmartDashboard.putNumber("Estimated Y in", poseEstimate.getY()*39.37);
+
+    SmartDashboard.putBoolean("Aimed", isAimed());
+    SmartDashboard.putBoolean("In Range", inShootingRange());
+    SmartDashboard.putNumber("Tree Map RPS", getRPSForPosition());
 
     SmartDashboard.putNumber("rot to hub", targetRotationToHub().getDegrees());
     SmartDashboard.putNumber("distance to hub", getDistance());

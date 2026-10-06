@@ -4,10 +4,8 @@
 
 package frc.robot;
 
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
-import com.ctre.phoenix6.CANBus;
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -86,6 +84,7 @@ public final class Constants {
     public static final int shooter_ID = 5; 
     public static final int shooter2_ID = 18;
     public static final int feeder_ID = 13;
+    
 
     public static final double kP = 0.3; //1.2
     public static final double kV = 0.12345;
@@ -98,6 +97,18 @@ public final class Constants {
 
     public static final double FEEDER_SPEED = -0.8;
   }
+
+  public static final class FunnelConstants {
+    public static final String CANbus = "rio";
+    public static final int FUNNEL_ID = 32; 
+
+    public static final double FUNNEL_SPEED = 0.4; // duty cycle, flip the sign if it spins the wrong way
+    public static final double START_TOLERANCE_RPS = 3.0; // funnel starts when shooter is this close to target
+    public static final double GEAR_RATIO = 4.0;
+
+    public static final double SUPPLY_CURRENT_LIMIT = 30;
+    public static final double STATOR_CURRENT_LIMIT = 30;
+}
 
   public static final class ClimberConstants{
     public static final int CLIMBER_ID = 4;

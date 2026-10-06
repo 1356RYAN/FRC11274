@@ -84,28 +84,28 @@ public class RobotContainer {
 
     m_driverController.povRight()
     .onTrue(m_climberSubsystem.setPosition(0, true));
-     m_driverController.leftBumper().onTrue(
-       new InstantCommand(() -> {
-         double currentPos = m_climberSubsystem.getPosition();
-         double minHeight = Constants.ClimberConstants.MIN_HEIGHT_ROTATIONS;
-         double maxHeight = Constants.ClimberConstants.MAX_HEIGHT_ROTATIONS;
-
-         if (Math.abs(currentPos - minHeight) > (maxHeight / 2)) {
-           m_climberSubsystem.setPosition(minHeight, true);
-         } else {
-           m_climberSubsystem.setPosition(maxHeight, false); 
-         }
-       }, m_climberSubsystem) 
-     );
 
     // m_driverController.a().onTrue(m_climberSubsystem.switchLimitsCommand());
     // m_driverController.b().onTrue(m_climberSubsystem.setCurrentPosToZeroCommand());
 
-    //Shooter
-    //m_driverController.x().whileTrue(Commands.deferredProxy(() -> m_shooterSubsystem.shootSequence(ShooterConstants.FEEDER_SPEED, m_telemetrySubsystem.getRPSForPosition())));
+    //MAINUAL SHOOTER
     m_driverController.a().whileTrue(Commands.deferredProxy(() -> m_shooterSubsystem.shootSequence(ShooterConstants.FEEDER_SPEED, 37.5)));
     m_driverController.b().whileTrue(Commands.deferredProxy(() -> m_shooterSubsystem.shootSequence(ShooterConstants.FEEDER_SPEED, 39)));
-    //m_driverController.y().whileTrue(Commands.deferredProxy(() -> m_shooterSubsystem.shootSequence(ShooterConstants.FEEDER_SPEED, 38)).alongWith(m_intakeSubsystem.oscillate()));
+
+    //MANUAL FUNNEL
+    m_driverController.y().whileTrue(m_shooterSubsystem.runFunnelManual());
+    
+    //TREE MAP SHOOTING
+    // m_driverController.y().whileTrue(
+    //  m_shooterSubsystem.shootSequence(
+    //    ShooterConstants.FEEDER_SPEED,
+    //    m_telemetrySubsystem::getRPSForPosition,
+    //    () -> m_telemetrySubsystem.isAimed() && m_telemetrySubsystem.inShootingRange()
+    //  )
+    //);
+
+
+
 
     //SHOOT WITH TREE MAP AND ALIGN
     // m_driverController.x().whileTrue(

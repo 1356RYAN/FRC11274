@@ -18,6 +18,7 @@ import frc.robot.Constants.SwerveDriveConstants;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 import frc.robot.subsystems.TelemetrySubsystem;
 import java.util.function.BooleanSupplier;
+import edu.wpi.first.math.MathUtil;
 
 /** An example command that uses an example subsystem. */
 public class DriveWithJoystick extends Command {
@@ -70,11 +71,13 @@ public class DriveWithJoystick extends Command {
       double currentHeading = m_telemetrySubsystem.getPose().getRotation().getDegrees();
       rot = -pidController.calculate(currentHeading, targetHeading);
     }
+
     if(alignToHub.getAsBoolean()){
       double currentDeg = m_telemetrySubsystem.getPose().getRotation().getDegrees();
       double targetDeg  = m_telemetrySubsystem.targetRotationToHub().getDegrees();
-      rot = -pidController.calculate(currentDeg, targetDeg);
+      rot = MathUtil.clamp(-pidController.calculate(currentDeg, targetDeg), -0.5, 0.5);
     }
+    
     if(rotateJoystick.getAsBoolean()){
       rot = m_controller.getRightX();
       rot = Math.abs(rot) > OIConstants.CONTROLLER_DEADBAND ? rot : 0.0;
